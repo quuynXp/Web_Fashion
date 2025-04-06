@@ -1,0 +1,48 @@
+﻿@model Web_Fashion.Models.Subscribe
+
+<div class="newsletter">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="newsletter_text d-flex flex-column justify-content-center align-items-lg-center align-items-md-center text-center">
+                    <h4 class="mb-3">Đăng ký</h4>
+                    <h6>Đăng ký nhận bản tin của chúng tôi và được giảm giá 20% cho lần mua đầu tiên của bạn</h6>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                @using (Ajax.BeginForm("Subscribe", "Home", new AjaxOptions
+                {
+                    OnBegin = "OnBeginSub",
+                    OnSuccess = "OnSuccessSub",
+                    OnFailure = "OnFailureSub"
+                }))
+                {
+                    @Html.AntiForgeryToken()
+                    <script>
+
+                        function OnBeginSub() {
+                            
+                        }
+                        function OnSuccessSub(rs) {
+                            console.log(rs);  // Kiểm tra nội dung phản hồi
+                            if (rs.Success) {
+                                alert(rs.Message);
+                            } else {
+                                alert(rs.Message);
+                            }
+                            document.getElementById("newsletter_email").value = "";
+                        }
+                        function OnFailureSub(rs) {
+                            alert("Có lỗi xảy ra khi gửi yêu cầu.");
+                        }
+                    </script>
+                    <div class="newsletter_form d-flex flex-md-row flex-column flex-xs-column align-items-center justify-content-lg-end justify-content-center">
+                        <input id="newsletter_email" name="Email" type="email" placeholder="Nhập email của bạn tại đây" required="required" data-error="Valid email is required.">
+                        <button id="newsletter_submit" type="submit" class="newsletter_submit_btn trans_300" value="Submit">Đăng ký</button>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
